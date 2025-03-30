@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct TMDBConfiguration: Decodable {
+struct openLibrary: Decodable {
     let images: ImageConfiguration
 }
 
