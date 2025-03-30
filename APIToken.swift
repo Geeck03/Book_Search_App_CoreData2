@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+
+/* 6:00 minutes of video 1. put in url of website*/
+
+//Creates API as a local variable.
+let APIToken = "Insert API Token";
+
+
+
