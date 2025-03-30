@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct openLibrary: Decodable {
+struct OpenLibrary: Decodable {
     let images: ImageConfiguration
 }
 
