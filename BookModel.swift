@@ -38,8 +38,10 @@ struct BookModel: Identifiable, Decodable {
         return networkManger.getCoverURL(path: coverPath)
     }
     
-    
-    
-    
-    
 }
+
+struct BookResponse: Decodable {
+    let results: [BookModel]
+}
+    
+

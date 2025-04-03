@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C365B41E2D9DFF20001669CA /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365B41D2D9DFF20001669CA /* DisplayView.swift */; };
 		C3B1A44D2D99F259008D5EF9 /* NetworkManagerVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B1A44C2D99F259008D5EF9 /* NetworkManagerVM.swift */; };
 		C3B1A44F2D99F29B008D5EF9 /* APIToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B1A44E2D99F29B008D5EF9 /* APIToken.swift */; };
 		C3DF8F8E2D98DB1D007DA095 /* BookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DF8F8D2D98DB1D007DA095 /* BookModel.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C365B41D2D9DFF20001669CA /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
 		C3B1A44C2D99F259008D5EF9 /* NetworkManagerVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerVM.swift; sourceTree = "<group>"; };
 		C3B1A44E2D99F29B008D5EF9 /* APIToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIToken.swift; sourceTree = "<group>"; };
 		C3DF8F5B2D98C789007DA095 /* Book_Search_App_CoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Book_Search_App_CoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +54,7 @@
 				C3B1A44C2D99F259008D5EF9 /* NetworkManagerVM.swift */,
 				C3DF8F912D98E293007DA095 /* SearchVM.swift */,
 				C3DF8F952D98E2AE007DA095 /* FavoritesVM.swift */,
+				C365B41D2D9DFF20001669CA /* DisplayView.swift */,
 				C3DF8F972D98E2D0007DA095 /* SearchView.swift */,
 				C3DF8F5D2D98C789007DA095 /* Book_Search_App_CoreData */,
 				C3DF8F5C2D98C789007DA095 /* Products */,
@@ -146,6 +149,7 @@
 				C3B1A44D2D99F259008D5EF9 /* NetworkManagerVM.swift in Sources */,
 				C3DF8F8E2D98DB1D007DA095 /* BookModel.swift in Sources */,
 				C3DF8F982D98E2D0007DA095 /* SearchView.swift in Sources */,
+				C365B41E2D9DFF20001669CA /* DisplayView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
