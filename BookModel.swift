@@ -12,9 +12,10 @@
 
 import Foundation
 
+//Identifiable allows us to use for reach to display information
 
 struct BookModel: Identifiable, Decodable {
-    let id: Int
+    let id: String
     let title: String
     let authors: String
     let publisher: String

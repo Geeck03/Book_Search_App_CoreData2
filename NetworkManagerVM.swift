@@ -23,11 +23,13 @@
 import Foundation
 
 
+
+//Requestion Book information
 struct OpenLibrary: Decodable {
     let images: ImageConfiguration
 }
 
-
+//This is the images
 struct ImageConfiguraton: Decodable {
     let baseUrL: String
     let secureBaseUrl: String
@@ -40,9 +42,15 @@ struct ImageConfiguraton: Decodable {
     }
 }
 
+
+//above is extra to help
+
 class NetworkManager: ObservableObject {
     //Need to fix the API token part
-    private let bearerToken = APIToken //replace with your actual bearer token
+    //private let bearerToken = APIToken //replace with your actual bearer token
+    
+    
+    //Below we are going to 
     private let baseURL = "https://openlibrary.org"
     
     @Published var books: [BookModel] = []
@@ -64,7 +72,7 @@ class NetworkManager: ObservableObject {
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = [
             "accept": "application/json",
-            "Authorization" : "Bearer \(bearerToken)"
+    
         ]
         
         do {
