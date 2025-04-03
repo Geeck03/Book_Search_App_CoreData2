@@ -1,7 +1,22 @@
 //
-//  NetworkManagerVM.swift
-//  Book_Search_App_CoreData
-//
+/*
+ 
+ NetworkManger:
+ 
+ Fetching Data-- Requests Book cover URL, author, publisher, titles, optional description
+ 
+ Handling Responses:-- Parses JSON into Usable Models
+ 
+ Error Handling-- Manages network failures, timeouts, or invalid response
+ 
+ Caching-- Stores Data to reduce API calls and improve performance
+ 
+ 
+ Authentication-- Not needed, beacuse we do not have an API key.
+ 
+ 
+ 
+ */
 //  Created by Sewell, Aramaea on 3/30/25.
 //
 
@@ -64,10 +79,9 @@ class NetworkManager: ObservableObject {
     }
     
     func getPosterURL(path: String?, size: String = "w500") -> URL? {
-        
         guard let path = path
                 let config = configuration
-                let baseURL = URL(String: config.images.secureBaseURL) else {return nil }
+                let baseURL = URL(String: config.images.secureBaseURL), else {return nil }
         return baseURL.appendingPathComponent(size).appendingPathComponent(path)
     }
     
