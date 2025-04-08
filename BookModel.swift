@@ -15,32 +15,35 @@ import Foundation
 //Identifiable allows us to use for reach to display information
 
 struct BookModel: Identifiable, Decodable {
+    //Using Search Model API 
     let id: String
     let title: String
-    let authors: String
+    let authors: [String]
     let publisher: String
     //Optional
-    let coverPath: String?
+    let coverId: Int?
     let description: String?
     
     
     enum CodingKeys: String, CodingKey {
-        case id,title,authors,publisher
-        // ! Probably need to insert the correct name here
-        case coverPath = "cover_path"
-        case description = "description"
+        case id = "key" 
+        case title 
+        case authors = "author_name" //The author field
+        case publisher 
+        case coverId = "cover_i" 
+        case description
     }
-    
-    func getDescriptionURL(from networkManger: NetworkManager) -> URL? {
-        return networkManger.getCoverURL(path: description)
-    }
-    
-    func getCoverURL(from networkManger: NetworkManager) -> URL? {
-        return networkManger.getCoverURL(path: coverPath)
+
+
+ //The method to get the URL from the search API  
+    func getCoverURL() -> URL? {
+       guard let coverId = coverId else { return nil } 
+       return URL(string: "https://covers.openlibrary.org/b/id/\(coverId)-L.jpg")
     }
     
 }
 
+//Response structure for APIs 
 struct BookResponse: Decodable {
     let results: [BookModel]
 }
