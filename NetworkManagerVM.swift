@@ -57,7 +57,12 @@ class NetworkManager: ObservableObject {
          
             let decoder = JSONDecoder()
             //Decodes the response into the BookResponse model
-            let bookResponse = try decoder.decode(BookResponse.self, from: data) 
+            let bookResponse = try decoder.decode(BookResponse.self, from: data)
+            
+            await MainActor.run {
+                self.books = bookResponse.results
+                self.isLoading = false
+            }
      
         } catch {
             await MainActor.run {
