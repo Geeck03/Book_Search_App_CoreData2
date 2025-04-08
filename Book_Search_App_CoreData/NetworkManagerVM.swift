@@ -28,15 +28,15 @@ class NetworkManager: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     
-    //Constructing the correct URL using a search query 
-
-    func fetchBooks(query: String) async -> [BookModel]? { 
-       guard let url = URL(string: "\(baseURL)/search.json?q=\(query)") else { 
-          return nil
-       }
-
-     
-       var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+    //Constructing the correct URL using a search query
+    
+    func fetchBooks(query: String) async -> [BookModel]? {
+        guard let url = URL(string: "\(baseURL)/search.json?q=\(query)") else {
+            return nil
+        }
+        
+        
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         components?.queryItems = [
             URLQueryItem(name: "q", value: query),
             URLQueryItem(name: "limit", value: "10") // Example of limiting the results
@@ -47,14 +47,12 @@ class NetworkManager: ObservableObject {
         var request = URLRequest(url: finalURL)
         request.httpMethod = "GET"
         request.allHTTPHeaderFields = ["Accept": "application/json"]
-     
-        do {
-
-            // Decode the response into an instance of the Bookresponse model
         
+        do {
+            
+            // Decode the response into an instance of the Bookresponse model
+            
             let (data, _) = try await URLSession.shared.data(for: request)
-
-         
             let decoder = JSONDecoder()
             //Decodes the response into the BookResponse model
             let bookResponse = try decoder.decode(BookResponse.self, from: data)
@@ -63,14 +61,17 @@ class NetworkManager: ObservableObject {
                 self.books = bookResponse.results
                 self.isLoading = false
             }
-     
-        } catch {
+            
+            return bookResponse.results
+        }
+        
+        catch {
             await MainActor.run {
                 self.errorMessage = "Failed to load books: \(error.localizedDescription)"
                 self.isLoading = false
                 //should return nil
-                return
             }
+            return nil
         }
     }
 }
