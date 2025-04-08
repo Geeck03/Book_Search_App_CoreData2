@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchViewPreview: View {
     @ObservedObject var viewModel = SearchViewModel()
-    @Published var books
+    //@Published var books: [BookModel] = []
     
     var body: some View {
         VStack {
@@ -24,8 +24,9 @@ struct SearchViewPreview: View {
                 Text("Error: \(errorMessage)")
             }
             
-            List(viewModel.books) books in
-            Text(books.title)
+            List(viewModel.books, id: \.self)  { book in
+                Text(books.title)
+            }
         }
     }
 }

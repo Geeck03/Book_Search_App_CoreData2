@@ -13,7 +13,7 @@ class SearchViewModel: ObservableObject {
     @Published var isLoading = false 
     @Published var errorMessage: String? 
 
-    private var networkManger = NetworkManager()
+    private var networkManager = NetworkManager()
   
     func searchBooks() {
 
@@ -32,10 +32,10 @@ class SearchViewModel: ObservableObject {
       // Allows you to do calls without blocking the main thread.
       
       Task { 
-          if let books = await NetworkManager.fetchBooks(query: query) {
+          if let books = await networkManager.fetchBooks(query: query) {
             self.books = books
         } else { 
-            self.errorMessage = NetworkManager.books
+            self.errorMessage = networkManager.errorMessage
         }
         isLoading = false
       }
