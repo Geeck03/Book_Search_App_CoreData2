@@ -14,8 +14,8 @@ import Foundation
 
 //Identifiable allows us to use for reach to display information
 
-struct BookModel: Identifiable, Decodable {
-    //Using Search Model API 
+struct BookModel: Identifiable, Decodable, Hashable {
+    //Using Search Model API
     let id: String
     let title: String
     let authors: [String]
@@ -39,6 +39,14 @@ struct BookModel: Identifiable, Decodable {
     func getCoverURL() -> URL? {
        guard let coverId = coverId else { return nil } 
        return URL(string: "https://covers.openlibrary.org/b/id/\(coverId)-L.jpg")
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: BookModel, rhs: BookModel) -> Bool {
+        return lhs.id == rhs.id
     }
     
 }

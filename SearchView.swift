@@ -24,8 +24,8 @@ struct SearchViewPreview: View {
                 Text("Error: \(errorMessage)")
             }
             
-            List(viewModel.books, id: \.self)  { book in
-                Text(books.title)
+            ForEach(viewModel.books, id: \.self) { book in
+                Text(book.title)
             }
         }
     }
