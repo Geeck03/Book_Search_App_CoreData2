@@ -22,104 +22,40 @@
 
 import Foundation
 
-
-
-//Requestion Book information
-struct OpenLibrary: Decodable {
-    let images: ImageConfiguration
-}
-
-//This is the images
-struct ImageConfiguraton: Decodable {
-    let baseUrL: String
-    let secureBaseUrl: String
-    let posterSize: [String]
-    
-    enum CodingKeys: String, CodingKey {
-        case baseUrL: "base_url"
-        case secureBaseUrl = "secure_base_url"
-        case posterSizes = "poster_sizes"
-    }
-}
-
-
-//above is extra to help
-
 class NetworkManager: ObservableObject {
-    //Need to fix the API token part
-    //private let bearerToken = APIToken //replace with your actual bearer token
-    
-    
-    //Below we are going to 
     private let baseURL = "https://openlibrary.org"
-    
     @Published var books: [BookModel] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
-    private var configuration: OpenLibrary?
     
-    init() {
-        Task {
-            await fetchConfiguration()
-        }
-    }
-    
-    
-    private func fetchConfiguration() async {
-        guard let url = URL(string: "\(baseURL)/configuration") else { return }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = [
-            "accept": "application/json",
-    
-        ]
-        
+    //Constructing the correct URL using a search query 
+    guard let url = URL(string: "\(baseURL)/search.json?q=\(query)") else { 
+        await MainActor.run { 
+            self.errorMessage = "Incorrect URL" 
+        } 
+        return 
+     
         do {
-            let (data, _) = try await URLSession.shared.data(for: request)
+
+            // Decode the response into an instance of the Bookresponse model
+            let (data, _) = try await URLSession.shared.data(from: url)
+
+         
             let decoder = JSONDecoder()
-            configuration = try decoder.decode(OpenLibrary.self, from: data)
+            //Decodes the response into the BookResponse model
+            let bookResponse = try decoder.decode(BookResponse.self, from: data) 
+
+            await MainActor.run { 
+                self.books = bookResponse.results 
+                self.isLoading = false 
+            }
+     
         } catch {
             await MainActor.run {
-                self.errorMessage = "Failed to load Configuration: \(error.localizedDescription)"
+                self.errorMessage = "Failed to load books: \(error.localizedDescription)"
+                self.isLoading = false
             }
         }
-    }
-    
-    func getPosterURL(path: String?, size: String = "w500") -> URL? {
-        guard let path = path
-                let config = configuration
-                let baseURL = URL(String: config.images.secureBaseURL), else {return nil }
-        return baseURL.appendingPathComponent(size).appendingPathComponent(path)
-    }
-    
-    func searchShows(query: String) async {
-        guard !query.isEmpty else {
-            await MainActor.run {
-                //if the search stirng is nil, don't wait for the search, kick it off the main thread and go back to wheatever is already in the main thread.
-                
-                books = []
-                
-            }
-            return 
-        }
-        //IF query String not empty
-        await MainActor.run {
-            isLoading = true
-            errorMessage = nil
-            
-        }
-        //API call begins
-        var components = URLComponents(string: "\(baseURL)/search/tv")
-        
-        
-        //add
-        
-        components?.queryItems = [
-            URLQueryItem(name: "query", value: query),
-            URLQueryItem(name: "include_adult")
-        ]
-        
     }
 }
 
