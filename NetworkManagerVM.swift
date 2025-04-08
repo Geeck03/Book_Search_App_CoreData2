@@ -29,31 +29,41 @@ class NetworkManager: ObservableObject {
     @Published var errorMessage: String?
     
     //Constructing the correct URL using a search query 
-    guard let url = URL(string: "\(baseURL)/search.json?q=\(query)") else { 
-        await MainActor.run { 
-            self.errorMessage = "Incorrect URL" 
-        } 
-        return 
+
+    func fetchBooks(query: String) async -> [BookModel]? { 
+       guard let url = URL(string: "\(baseURL)/search.json?q=\(query)") else { 
+          return nil
+       }
+
+     
+       var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        components?.queryItems = [
+            URLQueryItem(name: "q", value: query),
+            URLQueryItem(name: "limit", value: "10") // Example of limiting the results
+        ]
+        
+        guard let finalURL = components?.url else { return nil }
+        
+        var request = URLRequest(url: finalURL)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = ["Accept": "application/json"]
      
         do {
 
             // Decode the response into an instance of the Bookresponse model
-            let (data, _) = try await URLSession.shared.data(from: url)
+        
+            let (data, _) = try await URLSession.shared.data(for: request)
 
          
             let decoder = JSONDecoder()
             //Decodes the response into the BookResponse model
             let bookResponse = try decoder.decode(BookResponse.self, from: data) 
-
-            await MainActor.run { 
-                self.books = bookResponse.results 
-                self.isLoading = false 
-            }
      
         } catch {
             await MainActor.run {
                 self.errorMessage = "Failed to load books: \(error.localizedDescription)"
-                self.isLoading = false
+                self.isLoading = false 
+                return nil
             }
         }
     }
