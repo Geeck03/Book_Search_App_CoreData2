@@ -8,37 +8,30 @@
 import SwiftUI
 
 struct SearchViewPreview: View {
-    @State private var searchText = ""
+    @ObservedObject var viewModel = SearchViewModel()
+    @Published var books
     
     var body: some View {
-        SearchView(
-            text: $searchText,
-            onSubmit: { print("Search submitted: \(searchText)")}
-        )
-    }
-}
-
-struct SearchView: View {
-    @Binding var text: String
-    let onSubmit: () -> Void // This is a closure property that takes no paramters() and reutnrs nothing Void
-    //Think of it as a function that will be called when the search is submitted.
-    //Empty closure, like a pleaceHolder -> we will define its actions or behvaior later
-    
-    var body: some View {
-        HStack {
-            TextField("Search Books...", text: $text)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .onSubmit(onSubmit)
+        VStack {
+            TextField("Search for books", text: $viewModel.query, onCommit: {
+                viewModel.searchBooks()
+            })
+            .padding()
             
-            Button(action: onSubmit) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.blue)
+            if viewModel.isLoading {
+                ProgressView("Loading...")
+            } else if let errorMessage = viewModel.errorMessage {
+                Text("Error: \(errorMessage)")
             }
+            
+            List(viewModel.books) books in
+            Text(books.title)
         }
-        .padding()
     }
 }
+    
+
 
 #Preview {
-    SearchView()
+    SearchViewPreview()
 }

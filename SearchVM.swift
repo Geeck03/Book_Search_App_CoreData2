@@ -8,12 +8,12 @@
 import Foundation
 
 class SearchViewModel: ObservableObject { 
-    @Published var books: [BookModel] []
-    @Published var query: String = "" 
+    @Published var books: [BookModel] = []
+    @Published var query: String = ""
     @Published var isLoading = false 
     @Published var errorMessage: String? 
 
-    private var networkManger = NetworkManger() 
+    private var networkManger = NetworkManager()
   
     func searchBooks() {
 
@@ -21,7 +21,7 @@ class SearchViewModel: ObservableObject {
         guard !query.isEmpty else {
             self.books = [] 
             return 
-        }
+    }
 
       //Is loading triggers a spinner 
       isLoading =  true 
@@ -32,13 +32,13 @@ class SearchViewModel: ObservableObject {
       // Allows you to do calls without blocking the main thread.
       
       Task { 
-        if let books = await netoworkManager.fetchBooks(query: query) 
+          if let books = await NetworkManager.fetchBooks(query: query) {
             self.books = books
         } else { 
-            self.errorMessage = networkManager.books 
-        } 
-        is loading = false 
-      } 
+            self.errorMessage = NetworkManager.books
+        }
+        isLoading = false
+      }
     }
 }
         

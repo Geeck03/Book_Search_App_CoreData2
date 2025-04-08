@@ -11,7 +11,7 @@ struct BookRow: View {
     let book: BookModel
     
     //We pass this to get posterURL
-    @ObservedObject var networkManger: NetworkManger
+    @ObservedObject var networkManger: NetworkManager
     
     var body: some View {
         HStack(spacing: 15) {

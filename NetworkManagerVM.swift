@@ -62,8 +62,9 @@ class NetworkManager: ObservableObject {
         } catch {
             await MainActor.run {
                 self.errorMessage = "Failed to load books: \(error.localizedDescription)"
-                self.isLoading = false 
-                return nil
+                self.isLoading = false
+                //should return nil
+                return
             }
         }
     }
