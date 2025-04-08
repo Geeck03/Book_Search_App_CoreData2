@@ -32,11 +32,10 @@ class SearchViewModel: ObservableObject {
       // Allows you to do calls without blocking the main thread.
       
       Task { 
-        await netowrkManger.searchBooks(query: query) 
-        if let error = networkManger.errorMessage { 
-            self.errorMessage =error
+        if let books = await netoworkManager.fetchBooks(query: query) 
+            self.books = books
         } else { 
-            self.books = networkManger.books 
+            self.errorMessage = networkManager.books 
         } 
         is loading = false 
       } 
