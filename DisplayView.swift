@@ -15,7 +15,7 @@ struct BookRow: View {
     
     var body: some View {
         HStack(spacing: 15) {
-            AsyncImage(url: book.getCoverURL(from: networkManger)) {
+            AsyncImage(url: book.getCoverURL(from: networkManager)) {
                 image in
                 image
                     .resizable()
