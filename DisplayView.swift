@@ -29,14 +29,14 @@ struct BookRow: View {
                     .cornerRadius(8)
                 
             }
-        }
+        
         
         VStack(alignment: .leading, spacing: 8) {
             Text(book.name)
                 .font(.headline)
                 .lineLimit(2)
         }
-        
+    }
         //Might need to add other things like author and the like, but I'm wating
     }
 }
