@@ -54,5 +54,5 @@ struct DisplayListPreview: View {
  */ 
 
 #Preview {
-    BookRow()
+    BookRow(book: BookModel.example, networkManger: NetworkManager.mock)
 }
